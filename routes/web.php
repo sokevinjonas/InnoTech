@@ -10,3 +10,5 @@ Route::redirect('/', 'profile');
 
 Route::get('profile', [ProfileController::class, 'pageProfile']);
 Route::get('ajouter-article', [ArticleController::class, 'ajouterArticle']);
+
+// Route::get('category',)
