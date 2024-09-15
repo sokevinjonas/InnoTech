@@ -36,11 +36,11 @@
 <body>
 
     <!-- ======= Header ======= -->
-    @include('layouts.header')
+    @include('admin.layouts.header')
     <!-- End Header -->
 
     <!-- ======= Sidebar ======= -->
-    @include('layouts.sidebar')
+    @include('admin.layouts.sidebar')
     <!-- End Sidebar-->
 
     <main id="main" class="main">
