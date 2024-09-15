@@ -42,23 +42,26 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>Catégorie 1</td>
-                            <td>
-                                <button type="button" class="btn btn-secondary" data-bs-toggle="tooltip"
-                                    data-bs-placement="top" title="Description de la catégorie">Description</button>
-                            </td>
-                            <td>
-                                <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal"
-                                    data-bs-target="#CreatePostCategoryModal"
-                                    data-bs-action="/admin/post_categories/update/1" data-bs-name="Catégorie 1"
-                                    data-bs-description="Description de la catégorie">Éditer</button>
-                                <form action="/admin/post_categories/destroy/1" method="POST" style="display:inline;">
-                                    <button type="submit" class="btn btn-danger btn-sm"
-                                        onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette catégorie ?')">Supprimer</button>
-                                </form>
-                            </td>
-                        </tr>
+
+                        @foreach ($categories as $category)
+                            <tr>
+                                <td>{{ $category->name }}</td>
+                                <td>
+                                    <button type="button" class="btn btn-secondary" data-bs-toggle="tooltip"
+                                        data-bs-placement="top" title="{{ $category->description }}">Description</button>
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal"
+                                        data-bs-target="#CreatePostCategoryModal"
+                                        data-bs-action="/admin/post_categories/update/1" data-bs-name="Catégorie 1"
+                                        data-bs-description="Description de la catégorie">Éditer</button>
+                                    <form action="/admin/post_categories/destroy/1" method="POST" style="display:inline;">
+                                        <button type="submit" class="btn btn-danger btn-sm"
+                                            onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette catégorie ?')">Supprimer</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        @endforeach
                     </tbody>
                 </table>
                 <!-- Fin de la table des articles -->
@@ -75,7 +78,11 @@
                     <h1 class="modal-title fs-5" id="CreatePostCategoryModalLabel">Catégorie d'Article</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
                 </div>
-                <form id="postCategoryForm" action="" method="POST">
+
+                <form id="postCategoryForm" action="post_categories" method="POST">
+
+                    @csrf
+
                     <div class="modal-body">
                         <!-- Nom de la Catégorie -->
                         <div class="mb-3">
