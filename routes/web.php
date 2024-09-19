@@ -5,10 +5,13 @@ use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\PostCategoryController;
 use App\Http\Controllers\ProfileController;
 
-Route::redirect('/', 'profile');
+Route::redirect('/', 'admin/profile');
 
 
-Route::get('profile', [ProfileController::class, 'pageProfile']);
-Route::get('ajouter-article', [ArticleController::class, 'ajouterArticle']);
 
-Route::resource('post_categories', PostCategoryController::class);
+
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::get('ajouter-article', [ArticleController::class, 'ajouterArticle']);
+    Route::get('profile', [ProfileController::class, 'pageProfile'])->name('profile');
+    Route::resource('post_categories', PostCategoryController::class);
+});

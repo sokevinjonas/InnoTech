@@ -37,7 +37,7 @@ class PostCategoryController extends Controller
 
         PostCategory::create($data);
 
-        return redirect('post_categories');
+        return redirect()->route('admin.post_categories.index');
     }
 
     /**
@@ -69,6 +69,8 @@ class PostCategoryController extends Controller
      */
     public function destroy(PostCategory $postCategory)
     {
-        //
+        $postCategory->delete();
+
+        return redirect()->route('admin.post_categories.index')->with('success', 'categorie supprimer !');
     }
 }
