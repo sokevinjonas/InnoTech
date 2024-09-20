@@ -23,11 +23,12 @@
         </div>
     @endif
 
-    @session('success')
+    {{-- Cette condition verifie si il ya un message de success stocké dans la session 'success'  --}}
+    @if(session('success'))
         <div class="alert alert-success">
-            {{ $value }}
+            {{ session('success')}}
         </div>
-    @endsession
+    @endif
 
     <section class="section">
 

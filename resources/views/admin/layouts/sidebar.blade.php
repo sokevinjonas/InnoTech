@@ -82,7 +82,7 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link collapsed" href="#" onclick="return confirm('Ete vous surs ?')">
+            <a class="nav-link collapsed" href="/logout" onclick="return confirm('Ete vous surs ?')">
                 <i class="bi bi-box-arrow-right"></i>
                 <span>Déconnexion</span>
             </a>

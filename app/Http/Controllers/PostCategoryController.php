@@ -35,9 +35,8 @@ class PostCategoryController extends Controller
         $data = $request->all();
         $data['slug'] = Str::slug($data['name']);
 
-        PostCategory::create($data);
-
-        return redirect()->route('admin.post_categories.index');
+       $insert =  PostCategory::create($data);
+        return redirect()->route('admin.post_categories.index')->with("success", "La catégorie a été ajoutée avec success");
     }
 
     /**
