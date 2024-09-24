@@ -31,6 +31,8 @@
     <!-- Template Main CSS File -->
     <link href="{{ asset('assets/admin/css/style.css') }}" rel="stylesheet">
 
+    @yield('styles')
+
 </head>
 
 <body>
@@ -42,6 +44,7 @@
     <!-- ======= Sidebar ======= -->
     @include('admin.layouts.sidebar')
     <!-- End Sidebar-->
+
 
     <main id="main" class="main">
 
@@ -75,6 +78,9 @@
 
     <!-- Template Main JS File -->
     <script src="{{ asset('assets/admin/js/main.js') }}"></script>
+    <script src="{{ asset('assets/global/js/main.js') }}"></script>
+
+    @yield('scripts')
 
 </body>
 

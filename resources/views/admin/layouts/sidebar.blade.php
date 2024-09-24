@@ -10,7 +10,10 @@
 
         <!-- Profil -->
         <li class="nav-item">
-            <a class="nav-link collapsed" href="/profile">
+            <a @class([
+                'nav-link',
+                'collapsed' => !Route::currentRouteNamed('admin.profile*'),
+            ]) href="{{ route('admin.profile') }}">
                 <i class="bi bi-person-circle"></i>
                 <span>Profil</span>
             </a>
@@ -38,18 +41,23 @@
 
         <!-- Catégories d'Articles -->
         <li class="nav-item">
-            <a class="nav-link collapsed" data-bs-target="#category-nav" data-bs-toggle="collapse" href="#">
-                <i class="bi bi-folder"></i><span>Catégories</span>
-                <i class="bi bi-chevron-down ms-auto"></i>
+            <a @class(['nav-link', 'collapsed' => !Route::is('*post_categories*')]) data-bs-target="#category-nav" data-bs-toggle="collapse" href="#">
+                <i class="bi bi-folder"></i><span>Catégories</span><i class="bi bi-chevron-down ms-auto"></i>
             </a>
-            <ul id="category-nav" class="nav-content collapse">
+            <ul id="category-nav" @class([
+                'nav-content',
+                'collapse',
+                'show' => Route::is('*post_categories*'),
+            ]) data-bs-parent="#sidebar-nav">
                 <li>
-                    <a href="">
+                    <a href="{{ route('admin.post_categories.index', ['create' => true]) }}">
                         <i class="bi bi-circle"></i><span>Ajouter</span>
                     </a>
                 </li>
                 <li>
-                    <a href="{{ route('admin.post_categories.index') }}">
+                    <a href="{{ route('admin.post_categories.index') }}" @class([
+                        'active' => Route::currentRouteNamed('admin.post_categories.index'),
+                    ])>
                         <i class="bi bi-circle"></i><span>Liste</span>
                     </a>
                 </li>
@@ -74,12 +82,6 @@
         <!-- Déconnexion -->
         <li class="nav-heading">
             <hr>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link " href="pages-blank.html">
-                <i class="bi bi-file-earmark"></i>
-                <span>Blank</span>
-            </a>
         </li>
         <li class="nav-item">
             <a class="nav-link collapsed" href="/logout" onclick="return confirm('Ete vous surs ?')">

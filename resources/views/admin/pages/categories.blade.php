@@ -24,14 +24,13 @@
     @endif
 
     {{-- Cette condition verifie si il ya un message de success stocké dans la session 'success'  --}}
-    @if(session('success'))
+    @if (session('success'))
         <div class="alert alert-success">
-            {{ session('success')}}
+            {{ session('success') }}
         </div>
     @endif
 
     <section class="section">
-
         <div class="row mb-3">
             <div class="col-lg-12">
                 <div class="card">
@@ -47,7 +46,9 @@
 
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title">Liste des articles</h5>
+                <h5 class="card-title">
+                    Liste des articles
+                </h5>
 
                 <!-- Table pour afficher les articles -->
                 <table class="table datatable">
@@ -59,22 +60,28 @@
                         </tr>
                     </thead>
                     <tbody>
-
                         @foreach ($categories as $category)
                             <tr>
                                 <td>{{ $category->name }}</td>
                                 <td>
                                     <button type="button" class="btn btn-secondary" data-bs-toggle="tooltip"
-                                        data-bs-placement="top" title="{{ $category->description }}">Description</button>
+                                        data-bs-placement="top"
+                                        title="{{ $category->description ?? 'Pas de description' }}">
+                                        Description
+                                    </button>
                                 </td>
                                 <td>
+                                    {{-- <a href="{{ route('admin.post_categories.show', $category) }}"
+                                        class="btn btn-info btn-sm">Voir</a> --}}
                                     <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal"
                                         data-bs-target="#CreatePostCategoryModal"
-                                        data-bs-action="/admin/post_categories/update/1" data-bs-name="Catégorie 1"
-                                        data-bs-description="Description de la catégorie">Éditer</button>
-                                    <form
-                                        action="{{ route('admin.post_categories.destroy', ['post_category' => $category->id, 'name' => 'az']) }}"
-                                        method="POST" style="display:inline;">
+                                        data-bs-action="{{ route('admin.post_categories.update', $category) }}"
+                                        data-bs-name="{{ $category->name }}"
+                                        data-bs-description="{{ $category->description }}">
+                                        Éditer
+                                    </button>
+                                    <form action="{{ route('admin.post_categories.destroy', $category) }}" method="POST"
+                                        style="display:inline;">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-danger btn-sm"
@@ -99,10 +106,11 @@
                     <h1 class="modal-title fs-5" id="CreatePostCategoryModalLabel">Catégorie d'Article</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
                 </div>
-
                 <form id="postCategoryForm" action="{{ route('admin.post_categories.store') }}" method="POST">
                     @csrf
+                    @method('POST')
                     <div class="modal-body">
+                        <!-- Nom de la Catégorie -->
                         <div class="mb-3">
                             <label for="name" class="form-label">Nom de la Catégorie</label>
                             <input type="text" class="form-control @error('name') is-invalid @enderror" id="name"
@@ -130,4 +138,26 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('scripts')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // fornie pas boostrap
+            const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+            tooltipTriggerList.forEach(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
+
+            showModal('#CreatePostCategoryModal', @json($errors->any() || request()->has('create')));
+
+
+            initializeModalForm('#CreatePostCategoryModal', '#postCategoryForm', (button, form) => {
+                form.action = button.getAttribute('data-bs-action') ||
+                    '{{ route('admin.post_categories.store') }}';
+                form.querySelector('[name="_method"]').value = button.getAttribute('data-bs-action') ?
+                    'PUT' : 'POST';
+                form.querySelector('#name').value = button.getAttribute('data-bs-name') || '';
+                form.querySelector('#description').value = button.getAttribute('data-bs-description') || '';
+            });
+        });
+    </script>
 @endsection
