@@ -5,6 +5,7 @@ use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PostCategoryController;
 use App\Http\Controllers\AuthentificationController;
+use App\Http\Controllers\PostController;
 
 Route::redirect('/', 'admin/profile');
 
@@ -17,4 +18,6 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     Route::get('ajouter-article', [ArticleController::class, 'ajouterArticle']);
     Route::get('profile', [ProfileController::class, 'pageProfile'])->name('profile');
     Route::resource('post_categories', PostCategoryController::class);
+
+    Route::resource('posts', PostController::class);
 });

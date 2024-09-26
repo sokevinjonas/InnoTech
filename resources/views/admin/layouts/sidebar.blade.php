@@ -21,23 +21,24 @@
 
         <!-- Articles -->
         <li class="nav-item">
-            <a class="nav-link collapsed" data-bs-target="#blog-nav" data-bs-toggle="collapse" href="#">
-                <i class="bi bi-layout-text-window-reverse"></i><span>Articles</span>
-                <i class="bi bi-chevron-down ms-auto"></i>
+            <a @class(['nav-link', 'collapsed' => !Route::is('*posts*')]) data-bs-target="#blog-nav" data-bs-toggle="collapse" href="#">
+                <i class="bi bi-layout-text-window-reverse"></i><span>Articles</span><i
+                    class="bi bi-chevron-down ms-auto"></i>
             </a>
-            <ul id="blog-nav" class="nav-content collapse">
+            <ul id="blog-nav" @class(['nav-content', 'collapse', 'show' => Route::is('*posts*')]) data-bs-parent="#sidebar-nav">
                 <li>
-                    <a href="./posts-create.html">
+                    <a href="{{ route('admin.posts.create') }}" @class(['active' => Route::currentRouteNamed('*posts.create')])>
                         <i class="bi bi-circle"></i><span>Ajouter</span>
                     </a>
                 </li>
                 <li>
-                    <a href="./posts-index.html">
+                    <a href="{{ route('admin.posts.index') }}" @class(['active' => Route::currentRouteNamed('*posts.index')])>
                         <i class="bi bi-circle"></i><span>Liste</span>
                     </a>
                 </li>
             </ul>
         </li>
+
 
         <!-- Catégories d'Articles -->
         <li class="nav-item">
