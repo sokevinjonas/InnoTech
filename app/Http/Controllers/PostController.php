@@ -6,6 +6,7 @@ use App\Models\Post;
 use Illuminate\Support\Str;
 use App\Models\PostCategory;
 use App\Http\Requests\StorePostRequest;
+use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\UpdatePostRequest;
 
 class PostController extends Controller
@@ -59,14 +60,26 @@ class PostController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Post $post) {}
+    public function show(Post $post)
+    {
+        $statuses = Post::getFrStatuses();
+        // $comments = $post->comments()->with('user')->whereNull('comment_id')->get();
+
+        // Retourner la vue avec les données
+        return view('admin.posts.show', compact('post', 'statuses'));
+    }
 
     /**
      * Show the form for editing the specified resource.
      */
     public function edit(Post $post)
     {
-        //
+
+        $statuses = Post::getFrStatuses();
+        $categories = PostCategory::all(['id', 'name']);
+
+        // Retourner la vue avec les données
+        return view('admin.posts.edit', compact('post', 'categories', 'statuses'));
     }
 
     /**
@@ -82,6 +95,10 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
+
+
+        Storage::disk('public')->delete($post->image);
+
         $post->delete();
         return to_route('admin.posts.index')->with('success', 'Post supprimer !');
     }
