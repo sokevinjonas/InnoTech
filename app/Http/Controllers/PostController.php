@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use Illuminate\Support\Str;
 use App\Models\PostCategory;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
@@ -14,7 +15,10 @@ class PostController extends Controller
      */
     public function index()
     {
-        //
+        $posts = Post::latest()->get();
+
+        // Retourner la vue avec les données
+        return view('admin.posts.index', compact('posts'));
     }
 
     /**
@@ -22,11 +26,9 @@ class PostController extends Controller
      */
     public function create()
     {
-        // Récupérer les statuts et les catégories pour le formulaire de création
         $statuses = Post::getFrStatuses();
         $categories = PostCategory::all(['id', 'name']);
 
-        // Retourner la vue avec les données
         return view('admin.posts.create', compact('statuses', 'categories'));
     }
 
@@ -35,16 +37,29 @@ class PostController extends Controller
      */
     public function store(StorePostRequest $request)
     {
-        //
+        $data = $request->validated();
+
+        $data['comments_enabled'] = $request->filled('comments_enabled');
+        $data['category_id'] = $data['category'];
+
+        $data['slug'] = Str::slug($data['title']);
+
+        if ($request->file('image')) {
+            $data['image'] = $request->file('image')->store('posts', 'public');
+        }
+
+        if ($data['status'] === Post::PUBLISHED)
+            $data['published_at'] = now();
+
+        Post::create($data);
+
+        return to_route('admin.posts.index')->with('success', 'Post creer !');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Post $post)
-    {
-        //
-    }
+    public function show(Post $post) {}
 
     /**
      * Show the form for editing the specified resource.
@@ -67,6 +82,7 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        //
+        $post->delete();
+        return to_route('admin.posts.index')->with('success', 'Post supprimer !');
     }
 }

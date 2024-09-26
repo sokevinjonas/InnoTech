@@ -18,7 +18,12 @@ return new class extends Migration
             $table->longText('content')->nullable();
             $table->text('description');
             $table->enum('status', ['published', 'not_published']);
-            $table->foreignId('category_id')->constrained('post_categories')->onDelete('cascade')->onUpdate('cascade');
+
+            $table->foreignId('category_id')
+                ->constrained('post_categories')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
+
             $table->string('image')->nullable();
             $table->boolean('comments_enabled')->default(false);
             $table->timestamps();
