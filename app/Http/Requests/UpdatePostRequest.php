@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdatePostRequest extends FormRequest
@@ -11,7 +12,7 @@ class UpdatePostRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -21,8 +22,17 @@ class UpdatePostRequest extends FormRequest
      */
     public function rules(): array
     {
+        $postId = $this->route('post');
+        // dd($this->all());
+
         return [
-            //
+            'title' => ['required', 'string', 'max:255', Rule::unique('posts', 'title')->ignore($postId)],
+            'description' => 'required|string|max:500',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'category' => 'nullable|exists:post_categories,id',
+            'status' => 'required|in:published,not_published',
+            'comments_enabled' => 'nullable',
+            'content' => 'required|string',
         ];
     }
 }

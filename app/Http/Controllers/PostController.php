@@ -87,7 +87,24 @@ class PostController extends Controller
      */
     public function update(UpdatePostRequest $request, Post $post)
     {
-        //
+        $data = $request->validated();
+
+        $data['comments_enabled'] = $request->filled('comments_enabled');
+        $data['category_id'] = $data['category'];
+
+        $data['slug'] = Str::slug($data['title']);
+
+        if ($request->file('image')) {
+            Storage::disk('public')->delete($post->image);
+            $data['image'] = $request->file('image')->store('posts', 'public');
+        }
+
+        if ($data['status'] === Post::PUBLISHED)
+            $data['published_at'] = now();
+
+        $post->update($data);
+
+        return to_route('admin.posts.index')->with('success', 'Post creer !');
     }
 
     /**
