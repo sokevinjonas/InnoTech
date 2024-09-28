@@ -104,7 +104,7 @@ class PostController extends Controller
 
         $post->update($data);
 
-        return to_route('admin.posts.index')->with('success', 'Post creer !');
+        return to_route('admin.posts.index')->with('success', 'Post modifer !');
     }
 
     /**
@@ -112,10 +112,9 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-
-
-        Storage::disk('public')->delete($post->image);
-
+        if ($post->image != null) {
+            Storage::disk('public')->delete($post->image);
+        }
         $post->delete();
         return to_route('admin.posts.index')->with('success', 'Post supprimer !');
     }

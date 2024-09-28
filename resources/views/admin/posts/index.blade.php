@@ -12,7 +12,11 @@
         </nav>
     </div>
     <!-- End Page Title -->
-
+    @if (session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
     <section class="section">
         <div class="row">
             <div class="col-lg-12">
