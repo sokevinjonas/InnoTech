@@ -25,222 +25,71 @@
         <div class="container py-14 py-md-16">
             <div class="row gx-lg-8 gx-xl-12">
                 <div class="col-lg-8">
-                    <!-- Featured Post -->
-                    <div class="blog classic-view">
-                        <article class="post">
-                            <div class="card">
-                                <figure class="card-img-top overlay overlay-1 hover-scale">
-                                    <a href="post-show.html">
-                                        <img src="{{ asset('assets/customer/img/photos/b1.jpg') }}"
-                                            alt="featured-post-slug" />
-                                    </a>
-                                    <figcaption>
-                                        <h5 class="from-top mb-0">Read More</h5>
-                                    </figcaption>
-                                </figure>
-                                <div class="card-body">
-                                    <div class="post-header">
-                                        <div class="post-category text-line">
-                                            <a href="category-posts.html" class="hover" rel="category">Category Name</a>
-                                        </div>
-                                        <h2 class="post-title mt-1 mb-0">
-                                            <a class="link-dark" href="post-show.html">
-                                                Post Title
-                                            </a>
-                                        </h2>
-                                    </div>
-                                    <div class="post-content">
-                                        <p>Post Description</p>
-                                    </div>
-                                </div>
-                                <div class="card-footer">
-                                    <ul class="post-meta d-flex mb-0">
-                                        <li class="post-date"><i class="uil uil-calendar-alt"></i><span>Published
-                                                Date</span></li>
-                                        <li class="post-comments"><a href="#"><i class="uil uil-comment"></i>Comments
-                                                Count<span>Comments</span></a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </article>
-                    </div>
-
                     <!-- Posts List -->
                     <div class="blog grid grid-view">
                         <div class="row isotope gx-md-8 gy-8 mb-8">
-                            <article class="item post col-md-6">
-                                <div class="card">
-                                    <figure class="card-img-top overlay overlay-1 hover-scale">
-                                        <a href="post-show.html">
-                                            <img src="{{ asset('assets/customer/img/photos/b4.jpg') }}" alt="" />
-                                        </a>
-                                        <figcaption>
-                                            <h5 class="from-top mb-0">Read More</h5>
-                                        </figcaption>
-                                    </figure>
-                                    <div class="card-body">
-                                        <div class="post-header">
-                                            <div class="post-category text-line">
-                                                <a href="category-posts.html" class="hover" rel="category">Category
-                                                    Name</a>
+                            @forelse ($posts as $post)
+                                <article class="item post col-md-6">
+                                    <div class="card">
+                                        <figure class="card-img-top overlay overlay-1 hover-scale">
+                                            <a href="{{ route('public.blog.show', $post->slug) }}">
+                                                <img src="{{ $post->getImageUrl() ?? asset('assets/customer/img/photos/b4.jpg') }}"
+                                                    alt="{{ $post->title }}" />
+                                            </a>
+                                            <figcaption>
+                                                <h5 class="from-top mb-0">Lire Plus</h5>
+                                            </figcaption>
+                                        </figure>
+                                        <div class="card-body">
+                                            <div class="post-header">
+                                                <div class="post-category text-line">
+                                                    <a href="category-posts.html" class="hover" rel="category">
+                                                        {{ $post->category->name }}
+                                                    </a>
+                                                </div>
+                                                <h2 class="post-title h3 mt-1 mb-3">
+                                                    <a class="link-dark"
+                                                        href="{{ route('public.blog.show', $post->slug) }}">{{ $post->title }}</a>
+                                                </h2>
                                             </div>
-                                            <h2 class="post-title h3 mt-1 mb-3">
-                                                <a class="link-dark" href="post-show.html">Post Title</a>
-                                            </h2>
-                                        </div>
-                                        <div class="post-content">
-                                            <p>Post Description</p>
-                                        </div>
-                                    </div>
-                                    <div class="card-footer">
-                                        <ul class="post-meta d-flex mb-0">
-                                            <li class="post-date"><i class="uil uil-calendar-alt"></i><span>Published
-                                                    Date</span></li>
-                                            <li class="post-comments"><a href="post-show.html#comments"><i
-                                                        class="uil uil-comment"></i>Comments
-                                                    Count</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </article>
-                            <article class="item post col-md-6">
-                                <div class="card">
-                                    <figure class="card-img-top overlay overlay-1 hover-scale">
-                                        <a href="post-show.html">
-                                            <img src="{{ asset('assets/customer/img/photos/b3.jpg') }}" alt="" />
-                                        </a>
-                                        <figcaption>
-                                            <h5 class="from-top mb-0">Read More</h5>
-                                        </figcaption>
-                                    </figure>
-                                    <div class="card-body">
-                                        <div class="post-header">
-                                            <div class="post-category text-line">
-                                                <a href="category-posts.html" class="hover" rel="category">Category
-                                                    Name</a>
+                                            <div class="post-content">
+                                                <p>
+                                                    {{ $post->getDescription() }}
+                                                </p>
                                             </div>
-                                            <h2 class="post-title h3 mt-1 mb-3">
-                                                <a class="link-dark" href="post-show.html">Post Title</a>
-                                            </h2>
                                         </div>
-                                        <div class="post-content">
-                                            <p>Post Description</p>
+                                        <div class="card-footer">
+                                            <ul class="post-meta d-flex mb-0">
+                                                <li class="post-date">
+                                                    <i class="uil uil-calendar-alt"></i>
+                                                    <span>
+                                                        {{ $post->getPublishedAt() }}
+                                                    </span>
+                                                </li>
+                                                <li class="post-comments"><a href="post-show.html#comments"><i
+                                                            class="uil uil-comment"></i>Comments
+                                                        (0)
+                                                    </a></li>
+                                            </ul>
                                         </div>
                                     </div>
-                                    <div class="card-footer">
-                                        <ul class="post-meta d-flex mb-0">
-                                            <li class="post-date"><i class="uil uil-calendar-alt"></i><span>Published
-                                                    Date</span></li>
-                                            <li class="post-comments"><a href="post-show.html#comments"><i
-                                                        class="uil uil-comment"></i>Comments
-                                                    Count</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </article>
-                            <article class="item post col-md-6">
-                                <article class="item post col-md-6"></article>
-                                <div class="card">
-                                    <figure class="card-img-top overlay overlay-1 hover-scale">
-                                        <a href="post-show.html">
-                                            <img src="{{ asset('assets/customer/img/photos/b2.jpg') }}" alt="" />
-                                        </a>
-                                        <figcaption>
-                                            <h5 class="from-top mb-0">Read More</h5>
-                                        </figcaption>
-                                    </figure>
-                                    <div class="card-body">
-                                        <div class="post-header">
-                                            <div class="post-category text-line">
-                                                <a href="category-posts.html" class="hover" rel="category">Category
-                                                    Name</a>
+                                </article>
+                            @empty
+                                <section class="py-5 text-center">
+                                    <div class="container px-5">
+                                        <div class="row gx-5 justify-content-center">
+                                            <div class="col-lg-8 col-xl-6">
+                                                <p class="display-6 fw-bold mb-2">Aucun article pour l'instant !</p>
                                             </div>
-                                            <h2 class="post-title h3 mt-1 mb-3">
-                                                <a class="link-dark" href="post-show.html">Post Title</a>
-                                            </h2>
-                                        </div>
-                                        <div class="post-content">
-                                            <p>Post Description</p>
                                         </div>
                                     </div>
-                                    <div class="card-footer">
-                                        <ul class="post-meta d-flex mb-0">
-                                            <li class="post-date"><i class="uil uil-calendar-alt"></i><span>Published
-                                                    Date</span></li>
-                                            <li class="post-comments"><a href="post-show.html#comments"><i
-                                                        class="uil uil-comment"></i>Comments
-                                                    Count</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </article>
-                            <article class="item post col-md-6">
-                                <article class="item post col-md-6"></article>
-                                <div class="card">
-                                    <figure class="card-img-top overlay overlay-1 hover-scale">
-                                        <a href="post-show.html">
-                                            <img src="{{ asset('assets/customer/img/photos/b1.jpg') }}" alt="" />
-                                        </a>
-                                        <figcaption>
-                                            <h5 class="from-top mb-0">Read More</h5>
-                                        </figcaption>
-                                    </figure>
-                                    <div class="card-body">
-                                        <div class="post-header">
-                                            <div class="post-category text-line">
-                                                <a href="category-posts.html" class="hover" rel="category">Category
-                                                    Name</a>
-                                            </div>
-                                            <h2 class="post-title h3 mt-1 mb-3">
-                                                <a class="link-dark" href="post-show.html">Post Title</a>
-                                            </h2>
-                                        </div>
-                                        <div class="post-content">
-                                            <p>Post Description</p>
-                                        </div>
-                                    </div>
-                                    <div class="card-footer">
-                                        <ul class="post-meta d-flex mb-0">
-                                            <li class="post-date"><i class="uil uil-calendar-alt"></i><span>Published
-                                                    Date</span></li>
-                                            <li class="post-comments"><a href="post-show.html#comments"><i
-                                                        class="uil uil-comment"></i>Comments
-                                                    Count</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </article>
+                                </section>
+                            @endforelse
                         </div>
 
-                        <!-- Pagination -->
-                        <nav class="d-flex" aria-label="pagination">
-                            <ul class="pagination">
-                                <li class="page-item disabled">
-                                    <a class="page-link" href="#" aria-label="Previous">
-                                        <span aria-hidden="true"><i class="uil uil-arrow-left"></i></span>
-                                    </a>
-                                </li>
-                                <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                <li class="page-item">
-                                    <a class="page-link" href="#" aria-label="Next">
-                                        <span aria-hidden="true"><i class="uil uil-arrow-right"></i></span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </nav>
-
-                        <!-- No Posts Message -->
-                        <!-- <section class="py-5 text-center">
-                              <div class="container px-5">
-                                <div class="row gx-5 justify-content-center">
-                                  <div class="col-lg-8 col-xl-6">
-                                    <p class="display-6 fw-bold mb-2">Aucun article pour l'instant !</p>
-                                  </div>
-                                </div>
-                              </div>
-                            </section> -->
+                        <div>
+                            {{ $posts->links() }}
+                        </div>
                     </div>
 
                 </div>
