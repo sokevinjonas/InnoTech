@@ -13,13 +13,23 @@
                         <div class="offcanvas-body ms-lg-auto d-flex flex-column h-100">
                             <ul class="navbar-nav">
                                 <li class="nav-item">
-                                    <a class="nav-link active" href="index.html">Accueil</a>
+                                    <a @class([
+                                        'nav-link',
+                                        'active' => Route::currentRouteNamed('public.pages.home'),
+                                    ]) href="{{ route('public.pages.home') }}">Accueil</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="about.html">À propos</a>
+                                    <a @class([
+                                        'nav-link',
+                                        'active' => Route::currentRouteNamed('public.pages.about'),
+                                    ]) href="{{ route('public.pages.about') }}">À
+                                        propos</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="blog.html">Articles</a>
+                                    <a @class([
+                                        'nav-link',
+                                        'active' => Route::currentRouteNamed('public.blog.index'),
+                                    ]) href="{{ route('public.blog.index') }}">Articles</a>
                                 </li>
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" href="#"
@@ -34,7 +44,11 @@
                                     </ul>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="contact.html">Contact</a>
+                                    <a @class([
+                                        'nav-link',
+                                        'active' => Route::currentRouteNamed('public.pages.contact'),
+                                    ])
+                                        href="{{ route('public.pages.contact') }}">Contact</a>
                                 </li>
                                 <!-- User authentication example -->
                                 <li class="nav-item dropdown d-block d-md-none">

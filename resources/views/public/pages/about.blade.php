@@ -11,7 +11,7 @@
             </div>
         </div>
         <figure class="position-absoute" style="bottom: 0; left: 0; z-index: 2;"><img
-                src="{{ asset('dist/custom/img/photos/bg12.jpg') }}" alt="" /></figure>
+                src="{{ asset('assets/customer/img/photos/bg12.jpg') }}" alt="" /></figure>
     </section>
 
     <section class="wrapper bg-light angled upper-end lower-end">
@@ -20,18 +20,20 @@
                 <div class="col-lg-6 position-relative order-lg-2">
                     <div class="overlap-grid overlap-grid-2">
                         <div class="item">
-                            <figure class="rounded shadow"><img src="{{ asset('dist/custom/img/photos/about2.jpg') }}"
-                                    srcset="{{ asset('dist/custom/img/photos/about2@2x.jpg') }} 2x" alt=""></figure>
+                            <figure class="rounded shadow"><img src="{{ asset('assets/customer/img/photos/about2.jpg') }}"
+                                    srcset="{{ asset('assets/customer/img/photos/about2@2x.jpg') }} 2x" alt="">
+                            </figure>
                         </div>
                         <div class="item">
-                            <figure class="rounded shadow"><img src="{{ asset('dist/custom/img/photos/about3.jpg') }}"
-                                    srcset="{{ asset('dist/custom/img/photos/about3@2x.jpg') }} 2x" alt=""></figure>
+                            <figure class="rounded shadow"><img src="{{ asset('assets/customer/img/photos/about3.jpg') }}"
+                                    srcset="{{ asset('assets/customer/img/photos/about3@2x.jpg') }} 2x" alt="">
+                            </figure>
                         </div>
                     </div>
                 </div>
 
                 <div class="col-lg-6">
-                    <img src="{{ asset('assets/custom/img/icons/lineal/megaphone.svg') }}"
+                    <img src="{{ asset('assets/customer/img/icons/lineal/megaphone.svg') }}"
                         class="svg-inject icon-svg icon-svg-md mb-4" alt="" />
                     <h2 class="display-4 mb-3">Qui sommes-nous ?</h2>
                     <p class="lead fs-lg">TechFacile est un blog qui explore les dernières tendances en matière de
@@ -100,8 +102,8 @@
                 </div>
 
                 <div class="col-md-5 col-lg-5 col-xl-4 offset-xl-1 d-none d-md-flex position-relative align-self-end">
-                    <figure><img src="{{ asset('dist/custom/img/photos/co1.png') }}"
-                            srcset="{{ asset('dist/custom/img/photos/co1@2x.png') }} 2x" alt=""></figure>
+                    <figure><img src="{{ asset('assets/customer/img/photos/co1.png') }}"
+                            srcset="{{ asset('assets/customer/img/photos/co1@2x.png') }} 2x" alt=""></figure>
                 </div>
             </div>
         </div>

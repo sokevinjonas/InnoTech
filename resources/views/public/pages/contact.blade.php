@@ -30,15 +30,15 @@
                     <div class="row gx-md-5 gy-5">
                         <div class="col-md-6">
                             <figure class="rounded mt-md-10 position-relative"><img
-                                    src="{{ asset('assets/custom/img/photos/g5.jpg') }}"
-                                    srcset="{{ asset('assets/custom/img/photos/g5@2x.jpg') }} 2x" alt=""></figure>
+                                    src="{{ asset('assets/customer/img/photos/g5.jpg') }}"
+                                    srcset="{{ asset('assets/customer/img/photos/g5@2x.jpg') }} 2x" alt=""></figure>
                         </div>
                         <!--/column -->
                         <div class="col-md-6">
                             <div class="row gx-md-5 gy-5">
                                 <div class="col-md-12 order-md-2">
-                                    <figure class="rounded"><img src="{{ asset('assets/custom/img/photos/g6.jpg') }}"
-                                            srcset="{{ asset('assets/custom/img/photos/g6@2x.jpg') }} 2x" alt="">
+                                    <figure class="rounded"><img src="{{ asset('assets/customer/img/photos/g6.jpg') }}"
+                                            srcset="{{ asset('assets/customer/img/photos/g6@2x.jpg') }} 2x" alt="">
                                     </figure>
                                 </div>
                                 <!--/column -->
