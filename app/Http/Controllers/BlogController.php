@@ -16,7 +16,11 @@ class BlogController extends Controller
 
     public function show($slug)
     {
-        return view('public.blog.show');
+        $post = Post::where('slug', $slug)->first();
+
+        $comments = $post->comments()->whereNull('comment_id')->get();
+
+        return view('public.blog.show', compact('post', 'comments'));
     }
 
     public function category($slug)

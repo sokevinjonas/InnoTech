@@ -2,7 +2,7 @@
 
 @section('content')
     <section class="wrapper image-wrapper bg-image bg-overlay bg-overlay-light-600 text-white"
-        data-image-src="{{ asset('assets/custom/img/photos/bg18.png') }}">
+        data-image-src="{{ asset('assets/customer/img/photos/bg18.png') }}">
         <div class="container pt-17 pb-20 pt-md-19 pb-md-21 text-center">
             <div class="row">
                 <div class="col-lg-8 mx-auto">
@@ -44,10 +44,21 @@
                                 @endif --}}
 
                                 <div class="form-floating mb-4">
-                                    <input type="text" class="form-control @error('username') is-invalid @enderror"
-                                        placeholder="Pseudo" id="username" name="username" value="{{ old('username') }}">
-                                    <label for="username">Pseudo</label>
-                                    @error('username')
+                                    <input type="text" class="form-control @error('name') is-invalid @enderror"
+                                        placeholder="Nom" id="name" name="name" value="{{ old('name') }}">
+                                    <label for="name">Nom</label>
+                                    @error('name')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+
+                                <div class="form-floating mb-4">
+                                    <input type="text" class="form-control @error('email') is-invalid @enderror"
+                                        placeholder="Email" id="email" name="email" value="{{ old('email') }}">
+                                    <label for="email">Email</label>
+                                    @error('email')
                                         <div class="invalid-feedback">
                                             {{ $message }}
                                         </div>

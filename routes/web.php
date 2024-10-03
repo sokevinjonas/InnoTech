@@ -5,12 +5,14 @@ use App\Http\Controllers\BlogController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\PostCommentController;
 use App\Http\Controllers\PublicPagesController;
 use App\Http\Controllers\PostCategoryController;
 use App\Http\Controllers\PublicProfileController;
 use App\Http\Controllers\RegisteredUserController;
 use App\Http\Controllers\AuthentificationController;
 use App\Http\Controllers\PublicAuthenticatedSessionController;
+use App\Http\Controllers\PublicAuthentificationController;
 
 Route::redirect('/', '/home');
 
@@ -29,7 +31,15 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
 
 
 Route::name('public.')->group(function () {
-    // Route::get('home', [PublicPagesController::class, 'home']);
+
+    Route::get('login', [PublicAuthentificationController::class, 'create'])->name('login');
+    Route::post('login', [PublicAuthentificationController::class, 'store']);
+
+    Route::get('register', [RegisteredUserController::class, 'create'])->name('register');
+    Route::post('register', [RegisteredUserController::class, 'store']);
+
+    Route::post('logout', [PublicAuthentificationController::class, 'destroy'])->name('logout');
+
 
     Route::name('blog.')->group(function () {
         Route::controller(BlogController::class)->group(function () {
@@ -38,7 +48,7 @@ Route::name('public.')->group(function () {
             Route::get('posts/category/{category}', 'category')->name('category');
         });
 
-        // Route::resource('comments', PostCommentController::class)->only(['store', 'update', 'destroy'])->middleware('auth');
+        Route::resource('comments', PostCommentController::class)->only(['store', 'update', 'destroy'])->middleware('auth');
     });
 
 

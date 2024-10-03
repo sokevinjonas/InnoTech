@@ -7,18 +7,19 @@
 @section('content')
     <!-- /header -->
     <section class="wrapper image-wrapper bg-image bg-overlay text-white"
-        data-image-src="{{ asset('assets/customer/img/photos/bg5.jpg') }}">
+        data-image-src="{{ $post->getImageUrl() ?? asset('assets/customer/img/photos/b1.jpg') }}">
         <div class="container pt-18 pb-15 pt-md-20 pb-md-19 text-center">
             <div class="row">
                 <div class="col-md-10 col-xl-8 mx-auto">
                     <div class="post-header">
                         <div class="post-category text-line text-white">
-                            <a href="category-posts.html" class="text-reset" rel="category">Category Name</a>
+                            <a href="category-posts.html" class="text-reset" rel="category">{{ $post->category->name }}</a>
                         </div>
                         <!-- /.post-category -->
-                        <h1 class="display-1 mb-4 text-white">Post Title</h1>
+                        <h1 class="display-1 mb-4 text-white">{{ $post->title }}</h1>
                         <ul class="post-meta text-white">
-                            <li class="post-date"><i class="uil uil-calendar-alt"></i><span>Published Date</span></li>
+                            <li class="post-date"><i
+                                    class="uil uil-calendar-alt"></i><span>{{ $post->getPublishedAt() }}</span></li>
                             <li class="post-comments"><i class="uil uil-comment"></i><a href="#comments"
                                     class="text-reset">Comments
                                     Count<span> Comments</span></a></li>
@@ -41,13 +42,14 @@
                     <div class="blog single">
                         <div class="card">
                             <figure class="card-img-top">
-                                <img src="{{ asset('assets/customer/img/photos/b1.jpg') }}" alt="Post Slug" />
+                                <img src="{{ $post->getImageUrl() ?? asset('assets/customer/img/photos/b1.jpg') }}"
+                                    alt="{{ $post->slug }}" />
                             </figure>
                             <div class="card-body">
                                 <div class="classic-view">
                                     <article class="post">
                                         <div class="post-content mb-5">
-                                            Post Content Here
+                                            {{ $post->content }}
                                         </div>
                                         <!-- /.post-content -->
                                     </article>
@@ -55,59 +57,25 @@
                                 </div>
                                 <!-- /.classic-view -->
                                 <hr />
-                                <div id="comments">
-                                    <h3 class="mb-6">Comments Count Comments</h3>
-                                    <ol id="singlecomments" class="commentlist">
-                                        <li class="comment" id="comment-id">
-                                            <div class="comment-header d-md-flex align-items-center">
-                                                <div class="d-flex align-items-center">
-                                                    <figure class="user-avatar">
-                                                        <img class="rounded-circle" alt=""
-                                                            src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" />
-                                                    </figure>
-                                                    <div>
-                                                        <h6 class="comment-author">
-                                                            <a href="#" class="link-dark">Username</a>
-                                                        </h6>
-                                                        <ul class="post-meta">
-                                                            <li>
-                                                                <i class="uil uil-calendar-alt"></i>
-                                                                Comment Created At
-                                                            </li>
-                                                        </ul>
-                                                        <!-- /.post-meta -->
-                                                    </div>
-                                                    <!-- /div -->
-                                                </div>
-                                                <!-- /div -->
-                                                <div class="mt-3 mt-md-0 ms-auto">
-                                                    <button type="button"
-                                                        class="btn btn-soft-ash btn-sm rounded-pill btn-icon btn-icon-start mb-0 comment-reply">
-                                                        <i class="uil uil-comments"></i>
-                                                        Reply
-                                                    </button>
-                                                </div>
-                                                <!-- /div -->
-                                            </div>
-                                            <!-- /.comment-header -->
-                                            <p>Comment Content Here</p>
-                                            <ul class="children">
-                                                <li class="comment" id="response1-id">
+                                @if ($post->comments_enabled)
+                                    <div id="comments">
+                                        <h3 class="mb-6">{{ $comments->count() }} Comments</h3>
+                                        <ol id="singlecomments" class="commentlist">
+                                            @forelse ($comments as $comment)
+                                                <li class="comment" id="{{ $comment->id }}">
                                                     <div class="comment-header d-md-flex align-items-center">
                                                         <div class="d-flex align-items-center">
-                                                            <figure class="user-avatar">
-                                                                <img class="rounded-circle" alt=""
-                                                                    src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" />
+                                                            <figure class="user-avatar"><img class="rounded-circle"
+                                                                    alt=""
+                                                                    src="{{ 'https://dummyimage.com/50x50/ced4da/6c757d.jpg' }}" />
                                                             </figure>
                                                             <div>
-                                                                <h6 class="comment-author">
-                                                                    <a href="#" class="link-dark">Response1
-                                                                        Username</a>
+                                                                <h6 class="comment-author"><a href="#"
+                                                                        class="link-dark">{{ $comment->user->username }}</a>
                                                                 </h6>
                                                                 <ul class="post-meta">
-                                                                    <li>
-                                                                        <i class="uil uil-calendar-alt"></i>
-                                                                        Response1 Created At
+                                                                    <li><i class="uil uil-calendar-alt"></i>
+                                                                        {{ $comment->getCreatedAt() }}
                                                                     </li>
                                                                 </ul>
                                                                 <!-- /.post-meta -->
@@ -117,56 +85,98 @@
                                                         <!-- /div -->
                                                         <div class="mt-3 mt-md-0 ms-auto">
                                                             <button type="button"
-                                                                class="btn btn-soft-ash btn-sm rounded-pill btn-icon btn-icon-start mb-0 comment-reply">
-                                                                <i class="uil uil-comments"></i>
+                                                                class="btn btn-soft-ash btn-sm rounded-pill btn-icon btn-icon-start mb-0 comment-reply"
+                                                                data-comment='@json($comment->showViewJson())'>
+                                                                <i class="uil uil-comments "></i>
                                                                 Reply
                                                             </button>
                                                         </div>
                                                         <!-- /div -->
                                                     </div>
                                                     <!-- /.comment-header -->
-                                                    <p>Response1 Content Here</p>
-                                                    <ul class="children">
-                                                        <li class="comment" id="response2-id">
-                                                            <div class="comment-header d-md-flex align-items-center">
-                                                                <div class="d-flex align-items-center">
-                                                                    <figure class="user-avatar">
-                                                                        <img class="rounded-circle" alt=""
-                                                                            src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" />
-                                                                    </figure>
-                                                                    <div>
-                                                                        <h6 class="comment-author">
-                                                                            <a href="#" class="link-dark">Response2
-                                                                                Username</a>
-                                                                        </h6>
-                                                                        <ul class="post-meta">
-                                                                            <li>
-                                                                                <i class="uil uil-calendar-alt"></i>
-                                                                                Response2 Created At
-                                                                            </li>
-                                                                        </ul>
-                                                                        <!-- /.post-meta -->
+                                                    <p>{{ $comment->content }}</p>
+                                                    @foreach ($comment->responses as $response1)
+                                                        <ul class="children">
+                                                            <li class="comment" id="comment-{{ $response1->id }}">
+                                                                <div class="comment-header d-md-flex align-items-center">
+                                                                    <div class="d-flex align-items-center">
+                                                                        <figure class="user-avatar"><img
+                                                                                class="rounded-circle" alt=""
+                                                                                src="{{ 'https://dummyimage.com/50x50/ced4da/6c757d.jpg' }}" />
+                                                                        </figure>
+                                                                        <div>
+                                                                            <h6 class="comment-author"><a href="#"
+                                                                                    class="link-dark">{{ $response1->user->username }}</a>
+                                                                            </h6>
+                                                                            <ul class="post-meta">
+                                                                                <li>
+                                                                                    <i class="uil uil-calendar-alt"></i>
+                                                                                    {{ $response1->getCreatedAt() }}
+                                                                                </li>
+                                                                            </ul>
+                                                                            <!-- /.post-meta -->
+                                                                        </div>
+                                                                        <!-- /div -->
+                                                                    </div>
+                                                                    <!-- /div -->
+                                                                    <div class="mt-3 mt-md-0 ms-auto">
+                                                                        <button type="button"
+                                                                            class="btn btn-soft-ash btn-sm rounded-pill btn-icon btn-icon-start mb-0 comment-reply"
+                                                                            data-comment='@json($response1->showViewJson())'>
+                                                                            <i class="uil uil-comments "></i>
+                                                                            Reply</button>
                                                                     </div>
                                                                     <!-- /div -->
                                                                 </div>
-                                                                <!-- /div -->
-                                                            </div>
-                                                            <!-- /.comment-header -->
-                                                            <p>Response2 Content Here</p>
-                                                        </li>
-                                                    </ul>
+                                                                <!-- /.comment-header -->
+                                                                <p>{{ $response1->content }}</p>
+                                                                @foreach ($response1->responses as $response2)
+                                                                    <ul class="children">
+                                                                        <li class="comment" id="{{ $response2->id }}">
+                                                                            <div
+                                                                                class="comment-header d-md-flex align-items-center">
+                                                                                <div class="d-flex align-items-center">
+                                                                                    <figure class="user-avatar"><img
+                                                                                            class="rounded-circle"
+                                                                                            alt=""
+                                                                                            src="{{ 'https://dummyimage.com/50x50/ced4da/6c757d.jpg' }}" />
+                                                                                    </figure>
+                                                                                    <div>
+                                                                                        <h6 class="comment-author"><a
+                                                                                                href="#"
+                                                                                                class="link-dark">{{ $response2->user->username }}</a>
+                                                                                        </h6>
+                                                                                        <ul class="post-meta">
+                                                                                            <li><i
+                                                                                                    class="uil uil-calendar-alt"></i>{{ $response2->getCreatedAt() }}
+                                                                                            </li>
+                                                                                        </ul>
+                                                                                        <!-- /.post-meta -->
+                                                                                    </div>
+                                                                                    <!-- /div -->
+                                                                                </div>
+                                                                                <!-- /div -->
+                                                                            </div>
+                                                                            <!-- /.comment-header -->
+                                                                            <p>{{ $response2->content }}</p>
+                                                                        </li>
+                                                                    </ul>
+                                                                @endforeach
+                                                            </li>
+                                                        </ul>
+                                                    @endforeach
                                                 </li>
-                                            </ul>
-                                        </li>
-                                        <li class="comment">
-                                            <p>No comments yet.</p>
-                                        </li>
-                                    </ol>
-                                </div>
+                                            @empty
+                                                <p>Pas de commentaire pour l'instant.</p>
+                                            @endforelse
+                                        </ol>
+                                    </div>
+                                @endif
                                 <!-- /#comments -->
                                 <hr />
                                 <h3 class="mb-3">Would you like to share your thoughts?</h3>
-                                <p class="mb-7">Your email address will not be published. Required fields are marked *</p>
+                                <p class="mb-7">Your email address will not be published. Required fields are marked *
+                                </p>
                                 <div id="replyPlaceholder" class="d-none">
                                     <button type="button" class="btn-close float-end" aria-label="Close"></button>
                                     <a href="" id="commentAnchor" class="text-decoration-none link-dark">
@@ -197,16 +207,25 @@
                                         </ul>
                                     </a>
                                 </div>
-                                <form class="comment-form" action="submit-comment-route" method="POST">
-                                    <input type="hidden" name="post_id" value="Post ID">
-                                    <input type="hidden" name="comment_id" value="Comment ID">
+                                <form class="comment-form" action="{{ route('public.blog.comments.store') }}"
+                                    method="POST">
+                                    @csrf
+                                    <input type="hidden" name="post_id" value="{{ $post->id }}">
+                                    <input type="hidden" name="comment_id" value="{{ $post->comment_id }}">
 
                                     <div class="form-floating mb-4">
-                                        <textarea name="content" class="form-control" placeholder="Comment" style="height: 150px"></textarea>
-                                        <label>Comment *</label>
+                                        <textarea name="content" class="form-control @error('content') is-invalid @enderror" placeholder="Commentaire"
+                                            style="height: 150px">{{ old('content') }}</textarea>
+                                        <label>Commentaire *</label>
+
+                                        @error('content')
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
                                     </div>
 
-                                    <button type="submit" class="btn btn-primary rounded-pill mb-0">Submit</button>
+                                    <button type="submit" class="btn btn-primary rounded-pill mb-0">Envoyer</button>
                                 </form>
                                 <!-- /.comment-form -->
                             </div>

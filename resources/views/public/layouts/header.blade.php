@@ -51,33 +51,37 @@
                                         href="{{ route('public.pages.contact') }}">Contact</a>
                                 </li>
                                 <!-- User authentication example -->
-                                <li class="nav-item dropdown d-block d-md-none">
-                                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown"
-                                        href="#">Compte</a>
-                                    <ul class="dropdown-menu">
-                                        <li class="nav-item">
-                                            <a class="dropdown-item" href="#">
-                                                <i class="uil uil-user"></i>
-                                                Profil
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="dropdown-item" href="#">
-                                                <i class="uil uil-power"></i>
-                                                Déconnexion
-                                            </a>
+                                @if (auth()->check())
+                                    <li class="nav-item dropdown d-block d-md-none">
+                                        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown"
+                                            href="#">Compte</a>
+                                        <ul class="dropdown-menu">
+                                            <li class="nav-item">
+                                                <a class="dropdown-item" href="#">
+                                                    <i class="uil uil-user"></i>
+                                                    Profil
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="dropdown-item" href="#"
+                                                    onclick="logout(event, '{{ route('public.logout') }}', '{{ csrf_token() }}')">
+                                                    <i class="uil uil-power"></i>
+                                                    Déconnexion
+                                                </a>
 
-                                        </li>
-                                    </ul>
-                                </li>
-
-                                <li class="nav-item d-block d-md-none d-flex mt-5">
-                                    <a href="signup.html" class="btn btn-sm btn-primary rounded-pill display-6">
-                                        S'inscrire
-                                    </a>
-                                    <a href="signin.html"
-                                        class="btn btn-sm btn-outline-primary rounded-pill display-6 ms-2">Connexion</a>
-                                </li>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                @else
+                                    <li class="nav-item d-block d-md-none d-flex mt-5">
+                                        <a href="{{ route('public.register') }}"
+                                            class="btn btn-sm btn-primary rounded-pill display-6">
+                                            S'inscrire
+                                        </a>
+                                        <a href="{{ route('public.login') }}"
+                                            class="btn btn-sm btn-outline-primary rounded-pill display-6 ms-2">Connexion</a>
+                                    </li>
+                                @endif
                             </ul>
                             <div class="offcanvas-footer d-lg-none">
                                 <div>
@@ -96,33 +100,39 @@
                     </div>
                     <div class="navbar-other w-100 d-flex ms-auto">
                         <ul class="navbar-nav flex-row align-items-center ms-auto">
-                            <li class="nav-item d-none d-md-block">
-                                <a href="signup.html" class="btn btn-sm btn-primary rounded-pill">
-                                    S'inscrire
-                                </a>
-                            </li>
-                            <li class="nav-item d-none d-md-block">
-                                <a href="signin.html" class="btn btn-sm btn-outline-primary rounded-pill">Connexion</a>
-                            </li>
-                            <li class="nav-item d-none d-md-block dropdown">
-                                <img class="avatar w-10 dropdown-toggle" data-bs-toggle="dropdown"
-                                    src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="Avatar" />
-                                <ul class="dropdown-menu">
-                                    <li class="nav-item">
-                                        <a class="dropdown-item" href="profile-index.html">
-                                            <i class="uil uil-user"></i>
-                                            Profil
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="dropdown-item" href="#">
-                                            <i class="uil uil-power"></i>
-                                            Déconnexion
-                                        </a>
+                            @if (auth()->check())
+                                <li class="nav-item d-none d-md-block dropdown">
+                                    <img class="avatar w-10 dropdown-toggle" data-bs-toggle="dropdown"
+                                        src="{{ 'https://dummyimage.com/50x50/ced4da/6c757d.jpg' }}" alt="Avatar" />
+                                    <ul class="dropdown-menu">
+                                        <li class="nav-item">
+                                            <a class="dropdown-item" href="">
+                                                <i class="uil uil-user"></i>
+                                                Profil
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="dropdown-item" href="#"
+                                                onclick="logout(event, '{{ route('public.logout') }}', '{{ csrf_token() }}')">
+                                                <i class="uil uil-power"></i>
+                                                Déconnexion
+                                            </a>
 
-                                    </li>
-                                </ul>
-                            </li>
+                                        </li>
+                                    </ul>
+                                </li>
+                            @else
+                                <li class="nav-item d-none d-md-block">
+                                    <a href="{{ route('public.register') }}"
+                                        class="btn btn-sm btn-primary rounded-pill">
+                                        S'inscrire
+                                    </a>
+                                </li>
+                                <li class="nav-item d-none d-md-block">
+                                    <a href="{{ route('public.login') }}"
+                                        class="btn btn-sm btn-outline-primary rounded-pill">Connexion</a>
+                                </li>
+                            @endif
                             <li class="nav-item d-lg-none">
                                 <button class="hamburger offcanvas-nav-btn"><span></span></button>
                             </li>
